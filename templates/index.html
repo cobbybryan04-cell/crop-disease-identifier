@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Disease Identifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <h1>🌿 Crop Disease Identifier</h1>
+        <div>
+            <a href="/">Home</a>
+            <a href="/history">History</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Identify Crop Diseases Instantly</h2>
+            <p>Upload a photo of your crop and our AI will identify any diseases and suggest treatments</p>
+        </div>
+
+        <div class="upload-box">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="upload-area" id="uploadArea">
+                    <img src="" alt="" id="previewImage" style="display:none;">
+                    <div id="uploadText">
+                        <span>📸</span>
+                        <p>Click to upload or drag & drop</p>
+                        <p>Supports: JPG, PNG, GIF</p>
+                    </div>
+                    <input type="file" id="fileInput" name="file" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn">🔍 Analyze Crop</button>
+            </form>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <span>🤖</span>
+                <h3>AI Powered</h3>
+                <p>Uses advanced AI to identify diseases accurately</p>
+            </div>
+            <div class="feature-card">
+                <span>⚡</span>
+                <h3>Instant Results</h3>
+                <p>Get disease identification in seconds</p>
+            </div>
+            <div class="feature-card">
+                <span>💊</span>
+                <h3>Treatment Guide</h3>
+                <p>Receive specific treatment recommendations</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <h1>🌿 Crop Disease Identifier</h1>
+        <div>
+            <a href="/">Home</a>
+            <a href="/history">History</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">📋 Scan History</h2>
+
+        {% if scans %}
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Image</th>
+                    <th>Crop Type</th>
+                    <th>Disease</th>
+                    <th>Severity</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for scan in scans %}
+                <tr>
+                    <td>{{ scan[0] }}</td>
+                    <td>{{ scan[1] }}</td>
+                    <td>{{ scan[2] }}</td>
+                    <td>{{ scan[3] }}</td>
+                    <td class="severity-{{ scan[5] | lower }}">{{ scan[5] }}</td>
+                    <td>{{ scan[6] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+        <div class="empty-history">
+            <span>📭</span>
+            <h3>No scans yet!</h3>
+            <p>Upload a crop photo to get started</p>
+            <a href="/" class="btn">📸 Analyze a Crop</a>
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

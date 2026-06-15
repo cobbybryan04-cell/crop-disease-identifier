@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <h1>🌿 Crop Disease Identifier</h1>
+        <div>
+            <a href="/">Home</a>
+            <a href="/history">History</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Analysis Result</h2>
+
+        <div class="result-box">
+            <div class="result-image">
+                <img src="{{ url_for('static', filename='../uploads/' + image) }}" alt="Uploaded Crop">
+            </div>
+
+            <div class="result-details">
+                <div class="result-card">
+                    <span>🌾</span>
+                    <h3>Crop Type</h3>
+                    <p>{{ result.crop_type }}</p>
+                </div>
+
+                <div class="result-card">
+                    <span>🦠</span>
+                    <h3>Disease Detected</h3>
+                    <p>{{ result.disease_name }}</p>
+                </div>
+
+                <div class="result-card severity-{{ result.severity | lower }}">
+                    <span>⚠️</span>
+                    <h3>Severity</h3>
+                    <p>{{ result.severity }}</p>
+                </div>
+
+                <div class="result-card treatment">
+                    <span>💊</span>
+                    <h3>Recommended Treatment</h3>
+                    <p>{{ result.treatment }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="/" class="btn">📸 Analyze Another Crop</a>
+            <a href="/history" class="btn btn-outline">📋 View History</a>
+        </div>
+    </div>
+
+</body>
+</html>
