@@ -10,16 +10,28 @@
 
     <nav>
         <h1>🌿 Crop Disease Identifier</h1>
-        <div>
-            <a href="/">Home</a>
-            <a href="/history">History</a>
-        </div>
+  <div>
+    <a href="/">Home</a>
+    <a href="/history">History</a>
+    <a href="/about">About</a>
+    {% if session.get('admin') %}
+        <a href="/admin/dashboard">⚙️ Admin Panel</a>
+        <a href="/admin/logout">Logout</a>
+    {% else %}
+        <a href="/profile">👤 {{ session['user_name'] }}</a>
+        <a href="/logout">Logout</a>
+    {% endif %}
+</div>
     </nav>
 
     <div class="container">
         <h2 class="page-title">📋 Scan History</h2>
 
         {% if scans %}
+        <div class="history-actions">
+            <a href="/delete-all" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete ALL scans?')">🗑️ Delete All</a>
+        </div>
+
         <table class="history-table">
             <thead>
                 <tr>
@@ -29,17 +41,21 @@
                     <th>Disease</th>
                     <th>Severity</th>
                     <th>Date</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for scan in scans %}
                 <tr>
                     <td>{{ scan[0] }}</td>
-                    <td>{{ scan[1] }}</td>
+                    <td><img src="/uploads/{{ scan[1] }}" style="width:60px; height:60px; object-fit:cover; border-radius:6px;"></td>
                     <td>{{ scan[2] }}</td>
                     <td>{{ scan[3] }}</td>
                     <td class="severity-{{ scan[5] | lower }}">{{ scan[5] }}</td>
                     <td>{{ scan[6] }}</td>
+                    <td>
+                        <a href="/delete/{{ scan[0] }}" class="btn-delete" onclick="return confirm('Delete this scan?')">🗑️ Delete</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

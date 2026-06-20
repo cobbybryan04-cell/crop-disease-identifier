@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Crop Disease Identifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+   <nav>
+    <a href="/admin/dashboard" style="text-decoration:none; color:white;">
+        <h1>🌿 Crop Disease Identifier</h1>
+    </a>
+    <div>
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/scans">All Scans</a>
+        <a href="/about">About</a>
+        <a href="/admin/logout">Logout</a>
+    </div>
+</nav>
+
+    <div class="container">
+        <h2 class="page-title">👨‍💻 Admin Dashboard</h2>
+
+        <!-- STATS CARDS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span>👨‍🌾</span>
+                <h3>{{ total_users }}</h3>
+                <p>Total Farmers</p>
+            </div>
+            <div class="stat-card">
+                <span>📸</span>
+                <h3>{{ total_scans }}</h3>
+                <p>Total Scans</p>
+            </div>
+            <div class="stat-card">
+                <span>🦠</span>
+                <h3>{{ total_diseases }}</h3>
+                <p>Diseases Found</p>
+            </div>
+            <div class="stat-card">
+                <span>✅</span>
+                <h3>{{ healthy_crops }}</h3>

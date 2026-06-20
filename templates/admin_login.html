@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Crop Disease Identifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+    <a href="/admin/dashboard" style="text-decoration:none; color:white;">
+        <h1>🌿 Crop Disease Identifier</h1>
+    </a>
+    <div>
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/scans">All Scans</a>
+        <a href="/about">About</a>
+        <a href="/admin/logout">Logout</a>
+    </div>
+</nav>
+
+    <div class="container">
+        <div class="auth-box">
+            <h2>👨‍💻 Admin Login</h2>
+            <p>Restricted access — Admins only</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+                <div class="form-group">
+                    <label>Admin Username</label>
+                    <input type="text" name="username" placeholder="Enter admin username" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Admin Password</label>
+                    <input type="password" name="password" placeholder="Enter admin password" required>
+                </div>
+
+                <button type="submit" class="btn">🔐 Login as Admin</button>
+            </form>
+
+            <p class="auth-link"><a href="/login">← Back to Farmer Login</a></p>
+        </div>
+    </div>
+
+</body>
+</html>
