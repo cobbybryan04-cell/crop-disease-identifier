@@ -9,19 +9,22 @@
 <body>
 
     <nav>
-        <h1>🌿 Crop Disease Identifier</h1>
-   <div>
-    <a href="/">Home</a>
-    <a href="/history">History</a>
-    <a href="/about">About</a>
-    {% if session.get('admin') %}
-        <a href="/admin/dashboard">⚙️ Admin Panel</a>
-        <a href="/admin/logout">Logout</a>
-    {% else %}
-        <a href="/profile">👤 {{ session['user_name'] }}</a>
-        <a href="/logout">Logout</a>
-    {% endif %}
-</div>
+        <a href="/" style="text-decoration:none; color:white;">
+            <h1>🌿 Crop Disease Identifier</h1>
+        </a>
+        <div>
+            <a href="/">Home</a>
+            <a href="/history">History</a>
+            <a href="/chatbot">🤖 Assistant</a>
+            <a href="/about">About</a>
+            {% if session.get('admin') %}
+                <a href="/admin/dashboard">⚙️ Admin Panel</a>
+                <a href="/admin/logout">Logout</a>
+            {% else %}
+                <a href="/profile">👤 {{ session['user_name'] }}</a>
+                <a href="/logout">Logout</a>
+            {% endif %}
+        </div>
     </nav>
 
     <div class="container">
@@ -31,13 +34,13 @@
             <div class="about-card">
                 <span>🌿</span>
                 <h3>What is Crop Disease Identifier?</h3>
-                <p>Crop Disease Identifier is an AI-powered web application designed to help farmers in Rwanda identify crop diseases instantly by uploading a photo of their crop. The system analyzes the image and provides disease information and treatment recommendations.</p>
+                <p>Crop Disease Identifier is an AI-powered web application designed to help farmers worldwide identify crop diseases instantly by uploading a photo of their crop. The system analyzes the image and provides disease information and treatment recommendations.</p>
             </div>
 
             <div class="about-card">
                 <span>🎯</span>
                 <h3>Our Mission</h3>
-                <p>To empower Rwandan farmers with modern AI technology to detect crop diseases early, reduce crop losses, and improve agricultural productivity across Rwanda.</p>
+                <p>To empower farmers worldwide with modern AI technology to detect crop diseases early, reduce crop losses, and improve agricultural productivity.</p>
             </div>
 
             <div class="about-card">
@@ -61,4 +64,19 @@
                 <h3>Developer</h3>
                 <p>Developed by <strong>Pierre Bryan IRADUTUNGA</strong><br>
                 Final Year BIT Student<br>
-                University of Tourism and Business
+                University of Tourism and Business (UTB)<br>
+                Kigali, Rwanda 🇷🇼</p>
+            </div>
+
+            <div class="about-card">
+                <span>📞</span>
+                <h3>Contact</h3>
+                <p>Email: cobbybryan04@gmail.com<br>
+                <p>Call: 0783902971<br>
+                GitHub: github.com/cobbybryan04-cell</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

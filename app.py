@@ -1,8 +1,8 @@
 import os
 import base64
 from groq import Groq
-from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory
-from database import init_db, save_scan, get_user_scans, get_all_scans, delete_scan, delete_all_scans, register_user, get_user_by_email, get_user_by_id, delete_user, delete_user_scans, get_all_users, get_total_users, get_total_scans, get_disease_stats, get_severity_stats, get_healthy_crops, get_recent_scans_with_users, admin_delete_user
+from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, jsonify
+from database import init_db, save_scan, get_user_scans, get_all_scans, delete_scan, delete_all_scans, register_user, get_user_by_email, get_user_by_id, delete_user, delete_user_scans, get_all_users, get_total_users, get_total_scans, get_disease_stats, get_severity_stats, get_healthy_crops, get_recent_scans_with_users, admin_delete_user, get_top_crops, get_top_farmers, get_all_diseases
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 import bcrypt
@@ -199,6 +199,46 @@ def delete_all():
         delete_user_scans(session['user_id'])
     return redirect(url_for('history'))
 
+@app.route('/chatbot')
+def chatbot():
+    if 'user_id' not in session and 'admin' not in session:
+        return redirect(url_for('login'))
+    return render_template('chatbot.html')
+
+@app.route('/chatbot/ask', methods=['POST'])
+def chatbot_ask():
+    if 'user_id' not in session and 'admin' not in session:
+        return jsonify({'response': 'Please login first!'})
+    data = request.get_json()
+    user_message = data.get('message', '')
+    client = Groq(api_key=GROQ_API_KEY)
+    response = client.chat.completions.create(
+        model='meta-llama/llama-4-scout-17b-16e-instruct',
+        messages=[
+            {
+                'role': 'system',
+               'content': '''You are an expert agricultural assistant helping farmers worldwide.
+                You help farmers with:
+                - Crop disease identification and treatment
+                - Farming best practices
+                - Agriculture advice for any country or region
+                - Crop management tips
+                - Soil and weather related farming advice
+                - Pest and weed control
+                Keep answers clear, practical and friendly.
+                Adapt your advice based on the farmer location and crop type they mention.
+                You support all crops from any country in the world.'''
+            },
+            {
+                'role': 'user',
+                'content': user_message
+            }
+        ],
+        max_tokens=500
+    )
+    bot_response = response.choices[0].message.content
+    return jsonify({'response': bot_response})
+
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
@@ -218,16 +258,24 @@ def admin_dashboard():
         return redirect(url_for('admin_login'))
     disease_stats = get_disease_stats()
     severity_stats = get_severity_stats()
+
+    disease_labels = [d[0] for d in disease_stats] if disease_stats else ['No Data']
+    disease_counts = [d[1] for d in disease_stats] if disease_stats else [0]
+    severity_labels = [s[0] for s in severity_stats] if severity_stats else ['No Data']
+    severity_counts = [s[1] for s in severity_stats] if severity_stats else [0]
+
     return render_template('admin_dashboard.html',
         total_users=get_total_users(),
         total_scans=get_total_scans(),
         total_diseases=len(disease_stats),
         healthy_crops=get_healthy_crops(),
         recent_scans=get_recent_scans_with_users(),
-        disease_labels=[d[0] for d in disease_stats],
-        disease_counts=[d[1] for d in disease_stats],
-        severity_labels=[s[0] for s in severity_stats],
-        severity_counts=[s[1] for s in severity_stats]
+        top_crops=get_top_crops(),
+        top_farmers=get_top_farmers(),
+        disease_labels=disease_labels,
+        disease_counts=disease_counts,
+        severity_labels=severity_labels,
+        severity_counts=severity_counts
     )
 
 @app.route('/admin/users')
@@ -255,6 +303,13 @@ def admin_delete_user_route(user_id):
 def admin_logout():
     session.pop('admin', None)
     return redirect(url_for('admin_login'))
+
+@app.route('/admin/diseases')
+def admin_diseases():
+    if 'admin' not in session:
+        return redirect(url_for('admin_login'))
+    diseases = get_all_diseases()
+    return render_template('admin_diseases.html', diseases=diseases)
 
 if __name__ == '__main__':
     init_db()

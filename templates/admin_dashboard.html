@@ -9,18 +9,20 @@
 </head>
 <body>
 
-   <nav>
-    <a href="/admin/dashboard" style="text-decoration:none; color:white;">
-        <h1>🌿 Crop Disease Identifier</h1>
-    </a>
-    <div>
-        <a href="/admin/dashboard">Dashboard</a>
-        <a href="/admin/users">Users</a>
-        <a href="/admin/scans">All Scans</a>
-        <a href="/about">About</a>
-        <a href="/admin/logout">Logout</a>
-    </div>
-</nav>
+    <nav>
+        <a href="/admin/dashboard" style="text-decoration:none; color:white;">
+            <h1>🌿 Crop Disease Identifier</h1>
+        </a>
+        <div>
+            <a href="/">Home</a>
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/users">Users</a>
+            <a href="/admin/scans">All Scans</a>
+            <a href="/admin/diseases">Diseases</a>
+            <a href="/about">About</a>
+            <a href="/admin/logout">Logout</a>
+        </div>
+    </nav>
 
     <div class="container">
         <h2 class="page-title">👨‍💻 Admin Dashboard</h2>
@@ -45,3 +47,157 @@
             <div class="stat-card">
                 <span>✅</span>
                 <h3>{{ healthy_crops }}</h3>
+                <p>Healthy Crops</p>
+            </div>
+        </div>
+
+        <!-- CHARTS -->
+        <div class="charts-grid">
+            <div class="chart-box">
+                <h3>🦠 Top Diseases</h3>
+                <canvas id="diseasesChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <h3>⚠️ Severity Distribution</h3>
+                <canvas id="severityChart"></canvas>
+            </div>
+        </div>
+
+        <!-- TOP CROPS SCANNED -->
+        <div class="report-section">
+            <h3>🌾 Most Scanned Crops</h3>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Crop Type</th>
+                        <th>Total Scans</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for crop in top_crops %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>🌿 {{ crop[0] }}</td>
+                        <td>{{ crop[1] }}</td>
+                        <td><span class="badge-green">Active</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TOP SCANNERS -->
+        <div class="report-section">
+            <h3>👨‍🌾 Top Farmers (Most Scans)</h3>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Farmer Name</th>
+                        <th>Location</th>
+                        <th>Total Scans</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for farmer in top_farmers %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>👨‍🌾 {{ farmer[0] }}</td>
+                        <td>📍 {{ farmer[1] }}</td>
+                        <td>{{ farmer[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- RECENT SCANS -->
+        <div class="report-section">
+            <h3>📋 Recent Scans</h3>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Farmer</th>
+                        <th>Crop</th>
+                        <th>Disease</th>
+                        <th>Severity</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for scan in recent_scans %}
+                    <tr>
+                        <td>{{ scan[0] }}</td>
+                        <td><img src="/uploads/{{ scan[2] }}" style="width:50px; height:50px; object-fit:cover; border-radius:6px;"></td>
+                        <td>{{ scan[8] }}</td>
+                        <td>{{ scan[3] }}</td>
+                        <td>{{ scan[4] }}</td>
+                        <td class="severity-{{ scan[6] | lower }}">{{ scan[6] }}</td>
+                        <td>{{ scan[7] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script id="chart-data-json" type="application/json">
+        {{ { "diseaseLabels": disease_labels, "diseaseCounts": disease_counts, "severityLabels": severity_labels, "severityCounts": severity_counts } | tojson | safe }}
+    </script>
+
+    <script>
+        // Disease Chart
+       const chartData = JSON.parse(document.getElementById('chart-data-json').textContent || '{}');
+        const diseaseLabels = chartData.diseaseLabels || [];
+        const diseaseCounts = chartData.diseaseCounts || [];
+        const severityLabels = chartData.severityLabels || [];
+        const severityCounts = chartData.severityCounts || [];
+
+        const diseasesCtx = document.getElementById('diseasesChart').getContext('2d');
+        new Chart(diseasesCtx, {
+            type: 'bar',
+            data: {
+                labels: diseaseLabels,
+                datasets: [{
+                    label: 'Number of Cases',
+                    data: diseaseCounts,
+                    backgroundColor: ['#2d7a2d', '#4caf50', '#81c784', '#388e3c', '#1b5e20'],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
+                }
+            }
+        });
+
+        // Severity Chart
+        const severityCtx = document.getElementById('severityChart').getContext('2d');
+        new Chart(severityCtx, {
+            type: 'doughnut',
+            data: {
+                labels: severityLabels,
+                datasets: [{
+                    data: severityCounts,
+                    backgroundColor: ['#ff9800', '#4caf50', '#f44336', '#2196f3', '#9c27b0']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -10,9 +10,10 @@
 
     <nav>
     <h1>🌿 Crop Disease Identifier</h1>
-   <div>
+  <div>
     <a href="/">Home</a>
     <a href="/history">History</a>
+    <a href="/chatbot">🤖 Assistant</a>
     <a href="/about">About</a>
     {% if session.get('admin') %}
         <a href="/admin/dashboard">⚙️ Admin Panel</a>
@@ -55,11 +56,11 @@
                 <canvas id="canvas" style="display:none;"></canvas>
                 <img id="capturedImage" style="display:none; width:100%; border-radius:10px;">
             </div>
-            <div class="camera-buttons">
-                <button type="button" class="btn" onclick="startCamera()">📷 Start Camera</button>
-                <button type="button" class="btn" id="captureBtn" onclick="capturePhoto()" style="display:none;">📸 Capture</button>
-                <button type="button" class="btn btn-outline" id="retakeBtn" onclick="retakePhoto()" style="display:none;">🔄 Retake</button>
-            </div>
+           <div class="camera-buttons">
+    <button type="button" class="btn" id="startCameraBtn" onclick="startCamera()">📷 Start Camera</button>
+    <button type="button" class="btn" id="captureBtn" onclick="capturePhoto()" style="display:none;">📸 Capture Photo</button>
+    <button type="button" class="btn btn-outline" id="retakeBtn" onclick="retakePhoto()" style="display:none;">🔄 Retake</button>
+</div>
             <input type="file" id="cameraFile" name="file" style="display:none;">
         </div>
 

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Assistant - Crop Disease Identifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <a href="/" style="text-decoration:none; color:white;">
+            <h1>🌿 Crop Disease Identifier</h1>
+        </a>
+        <div>
+            <a href="/">Home</a>
+            <a href="/history">History</a>
+            <a href="/chatbot">🤖 Assistant</a>
+            <a href="/about">About</a>
+            {% if session.get('admin') %}
+                <a href="/admin/dashboard">⚙️ Admin Panel</a>
+                <a href="/admin/logout">Logout</a>
+            {% else %}
+                <a href="/profile">👤 {{ session['user_name'] }}</a>
+                <a href="/logout">Logout</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">🤖 Farm Assistant</h2>
+        <p style="text-align:center; color:#666; margin-bottom:20px;">Ask me anything about crop diseases, treatments, or farming advice!</p>
+
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <span class="message-icon">🤖</span>
+                    <div class="message-content">
+                        <p>Hello {{ session['user_name'] }}! 👋 I'm your Farm Assistant. Ask me anything about:</p>
+                        <ul>
+                            <li>🌿 Crop diseases and symptoms</li>
+                            <li>💊 Treatment recommendations</li>
+                            <li>🌱 Farming best practices</li>
+                            <li>🌍 Worldwide agriculture tips</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Ask about crop diseases..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()" class="chat-send-btn">Send 📤</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            input.value = '';
+
+            addTypingIndicator();
+
+            try {
+                const response = await fetch('/chatbot/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+                const data = await response.json();
+                removeTypingIndicator();
+                addMessage(data.response, 'bot');
+            } catch(error) {
+                removeTypingIndicator();
+                addMessage('Sorry, I could not process your request. Please try again!', 'bot');
+            }
+        }
+
+        function addMessage(text, sender) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.innerHTML = `
+                <span class="message-icon">${sender === 'bot' ? '🤖' : '👨‍🌾'}</span>
+                <div class="message-content"><p>${text}</p></div>
+            `;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function addTypingIndicator() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot-message typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <span class="message-icon">🤖</span>
+                <div class="message-content"><p>Thinking... 💭</p></div>
+            `;
+            messagesDiv.appendChild(typingDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typing = document.getElementById('typingIndicator');
+            if (typing) typing.remove();
+        }
+    </script>
+
+</body>
+</html>

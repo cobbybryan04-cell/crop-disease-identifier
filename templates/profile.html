@@ -10,13 +10,19 @@
 
     <nav>
         <h1>🌿 Crop Disease Identifier</h1>
-        <div>
-            <a href="/">Home</a>
-            <a href="/history">History</a>
-            <a href="/about">About</a>
-            <a href="/profile">👤 {{ session['user_name'] }}</a>
-            <a href="/logout">Logout</a>
-        </div>
+    <div>
+    <a href="/">Home</a>
+    <a href="/history">History</a>
+    <a href="/chatbot">🤖 Assistant</a>
+    <a href="/about">About</a>
+    {% if session.get('admin') %}
+        <a href="/admin/dashboard">⚙️ Admin Panel</a>
+        <a href="/admin/logout">Logout</a>
+    {% else %}
+        <a href="/profile">👤 {{ session['user_name'] }}</a>
+        <a href="/logout">Logout</a>
+    {% endif %}
+</div>
     </nav>
 
     <div class="container">

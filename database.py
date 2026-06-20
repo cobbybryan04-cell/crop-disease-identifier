@@ -198,3 +198,48 @@ def admin_delete_user(user_id):
     cursor.execute('DELETE FROM users WHERE id = ?', (user_id,))
     conn.commit()
     conn.close()
+
+def get_top_crops():
+    conn = sqlite3.connect('crop_disease.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT crop_type, COUNT(*) as count
+        FROM scans
+        WHERE crop_type != "Unknown"
+        GROUP BY crop_type
+        ORDER BY count DESC
+        LIMIT 5
+    ''')
+    crops = cursor.fetchall()
+    conn.close()
+    return crops
+
+def get_top_farmers():
+    conn = sqlite3.connect('crop_disease.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT users.name, users.location, COUNT(scans.id) as count
+        FROM scans
+        JOIN users ON scans.user_id = users.id
+        GROUP BY users.id
+        ORDER BY count DESC
+        LIMIT 5
+    ''')
+    farmers = cursor.fetchall()
+    conn.close()
+    return farmers
+
+def get_all_diseases():
+    conn = sqlite3.connect('crop_disease.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT disease_name, crop_type, COUNT(*) as count, severity
+        FROM scans
+        WHERE disease_name != "No Disease Detected"
+        AND disease_name != "Unknown"
+        GROUP BY disease_name
+        ORDER BY count DESC
+    ''')
+    diseases = cursor.fetchall()
+    conn.close()
+    return diseases

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseases - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/admin/dashboard" style="text-decoration:none; color:white;">
+            <h1>🌿 Crop Disease Identifier</h1>
+        </a>
+        <div>
+            <a href="/">Home</a>
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/users">Users</a>
+            <a href="/admin/scans">All Scans</a>
+            <a href="/admin/diseases">Diseases</a>
+            <a href="/about">About</a>
+            <a href="/admin/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">🦠 Detected Diseases</h2>
+
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Disease Name</th>
+                    <th>Affected Crop</th>
+                    <th>Total Cases</th>
+                    <th>Severity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for disease in diseases %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>🦠 {{ disease[0] }}</td>
+                    <td>🌿 {{ disease[1] }}</td>
+                    <td>{{ disease[2] }}</td>
+                    <td class="severity-{{ disease[3] | lower }}">{{ disease[3] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -9,22 +9,25 @@
 <body>
 
     <nav>
-        <h1>🌿 Crop Disease Identifier</h1>
-  <div>
-    <a href="/">Home</a>
-    <a href="/history">History</a>
-    <a href="/about">About</a>
-    {% if session.get('admin') %}
-        <a href="/admin/dashboard">⚙️ Admin Panel</a>
-        <a href="/admin/logout">Logout</a>
-    {% else %}
-        <a href="/profile">👤 {{ session['user_name'] }}</a>
-        <a href="/logout">Logout</a>
-    {% endif %}
-</div>
+        <a href="/" style="text-decoration:none; color:white;">
+            <h1>🌿 Crop Disease Identifier</h1>
+        </a>
+        <div>
+            <a href="/">Home</a>
+            <a href="/history">History</a>
+            <a href="/chatbot">🤖 Assistant</a>
+            <a href="/about">About</a>
+            {% if session.get('admin') %}
+                <a href="/admin/dashboard">⚙️ Admin Panel</a>
+                <a href="/admin/logout">Logout</a>
+            {% else %}
+                <a href="/profile">👤 {{ session['user_name'] }}</a>
+                <a href="/logout">Logout</a>
+            {% endif %}
+        </div>
     </nav>
 
-    <div class="container">
+    <div class="containr p-4">
         <h2 class="page-title">📋 Scan History</h2>
 
         {% if scans %}
@@ -39,6 +42,7 @@
                     <th>Image</th>
                     <th>Crop Type</th>
                     <th>Disease</th>
+                    <th>Treatment</th>
                     <th>Severity</th>
                     <th>Date</th>
                     <th>Action</th>
@@ -48,14 +52,13 @@
                 {% for scan in scans %}
                 <tr>
                     <td>{{ scan[0] }}</td>
-                    <td><img src="/uploads/{{ scan[1] }}" style="width:60px; height:60px; object-fit:cover; border-radius:6px;"></td>
-                    <td>{{ scan[2] }}</td>
+                    <td><img src="/uploads/{{ scan[2] }}" style="width:60px; height:60px; object-fit:cover; border-radius:6px;"></td>
                     <td>{{ scan[3] }}</td>
-                    <td class="severity-{{ scan[5] | lower }}">{{ scan[5] }}</td>
-                    <td>{{ scan[6] }}</td>
-                    <td>
-                        <a href="/delete/{{ scan[0] }}" class="btn-delete" onclick="return confirm('Delete this scan?')">🗑️ Delete</a>
-                    </td>
+                    <td>{{ scan[4] }}</td>
+                    <td>{{ scan[5] }}</td>
+                    <td class="severity-{{ scan[6] | lower }}">{{ scan[6] }}</td>
+                    <td>{{ scan[7] }}</td>
+                    <td><a href="/delete/{{ scan[0] }}" class="btn-delete" onclick="return confirm('Delete this scan?')">🗑️ Delete</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

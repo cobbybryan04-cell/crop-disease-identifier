@@ -1,4 +1,4 @@
-// Image Preview
+// Image Preview for upload tab
 const fileInput = document.getElementById('fileInput');
 const previewImage = document.getElementById('previewImage');
 const uploadText = document.getElementById('uploadText');
@@ -41,6 +41,7 @@ function showTab(tab) {
 
 // Camera
 let stream = null;
+let capturedBlob = null;
 
 async function startCamera() {
     try {
@@ -48,7 +49,8 @@ async function startCamera() {
         document.getElementById('video').srcObject = stream;
         document.getElementById('video').style.display = 'block';
         document.getElementById('captureBtn').style.display = 'inline-block';
-        document.querySelector('.camera-buttons .btn').style.display = 'none';
+        document.getElementById('startCameraBtn').style.display = 'none';
+        document.getElementById('capturedImage').style.display = 'none';
     } catch(err) {
         alert('Camera not accessible: ' + err.message);
     }
@@ -60,21 +62,16 @@ function capturePhoto() {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     canvas.getContext('2d').drawImage(video, 0, 0);
-    
+
     canvas.toBlob(function(blob) {
-        const file = new File([blob], 'camera_capture.jpg', { type: 'image/jpeg' });
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(file);
-        document.getElementById('cameraFile').files = dataTransfer.files;
-        document.getElementById('cameraFile').name = 'file';
-        
+        capturedBlob = blob;
         const url = URL.createObjectURL(blob);
         document.getElementById('capturedImage').src = url;
         document.getElementById('capturedImage').style.display = 'block';
         document.getElementById('video').style.display = 'none';
         document.getElementById('captureBtn').style.display = 'none';
         document.getElementById('retakeBtn').style.display = 'inline-block';
-        
+
         if (stream) {
             stream.getTracks().forEach(track => track.stop());
         }
@@ -82,8 +79,44 @@ function capturePhoto() {
 }
 
 function retakePhoto() {
+    capturedBlob = null;
     document.getElementById('capturedImage').style.display = 'none';
     document.getElementById('retakeBtn').style.display = 'none';
-    document.getElementById('captureBtn').style.display = 'inline-block';
+    document.getElementById('startCameraBtn').style.display = 'inline-block';
     startCamera();
+}
+
+// Override form submit to handle camera blob
+if (form) {
+    form.addEventListener('submit', function(e) {
+        const cameraTab = document.getElementById('cameraTab');
+        if (cameraTab && cameraTab.style.display !== 'none' && capturedBlob) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('file', capturedBlob, 'camera_capture.jpg');
+
+            document.getElementById('loadingSpinner').style.display = 'flex';
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.text().then(html => {
+                        document.open();
+                        document.write(html);
+                        document.close();
+                    });
+                }
+            }).catch(err => {
+                alert('Upload failed: ' + err.message);
+                document.getElementById('loadingSpinner').style.display = 'none';
+            });
+        } else {
+            document.getElementById('loadingSpinner').style.display = 'flex';
+        }
+    });
 }
