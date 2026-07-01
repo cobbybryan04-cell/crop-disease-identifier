@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Crop Disease Identifier</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/css/all.min.css">
 </head>
 <body>
 
   <nav>
-    <h1>🌿 Crop Disease Identifier</h1>
+    <h1><i class="fa-brands fa-pagelines"></i> Crop Disease Identifier</h1>
     <div>
         <a href="/login">Farmer Login</a>
         <a href="/register">Register</a>
@@ -20,7 +21,10 @@
 
     <div class="container">
         <div class="auth-box">
-            <h2>👨‍🌾 Farmer Login</h2>
+            <h2>
+                <i class="fa-solid fa-user"></i>
+                Farmer Login
+            </h2>
             <p>Welcome back! Please login to continue</p>
 
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -42,7 +46,7 @@
                     <input type="password" name="password" placeholder="Enter your password" required>
                 </div>
 
-                <button type="submit" class="btn">🔑 Login</button>
+                <button type="submit" class="btn"><i class="fa fa-key"></i> Login</button>
             </form>
 
             <p class="auth-link">Don't have an account? <a href="/register">Register here</a></p>

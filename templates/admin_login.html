@@ -5,19 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Crop Disease Identifier</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/css/all.min.css">
 </head>
 <body>
 
     <nav>
     <a href="/admin/dashboard" style="text-decoration:none; color:white;">
-        <h1>🌿 Crop Disease Identifier</h1>
+        <h1><i class="fa-brands fa-pagelines"></i> Crop Disease Identifier</h1>
     </a>
     <div>
         {% if session.get('admin') %}
-            <a href="/admin/dashboard">Dashboard</a>
-            <a href="/admin/users">Users</a>
-            <a href="/admin/scans">All Scans</a>            
-            <a href="/admin/logout">Logout</a>
+            <a href="/admin/dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="/admin/users"><i class="fa-solid fa-users"></i> Users</a>
+            <a href="/admin/scans"><i class="fa-solid fa-history"></i> All Scans</a>
+            <a href="/admin/logout"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
         {% else %}
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -28,7 +29,7 @@
 
     <div class="container">
         <div class="auth-box">
-            <h2>👨‍💻 Admin Login</h2>
+            <h2><i class="fa-solid fa-user-shield"></i> Admin Login</h2>
             <p>Restricted access — Admins only</p>
 
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -50,7 +51,7 @@
                     <input type="password" name="password" placeholder="Enter admin password" required>
                 </div>
 
-                <button type="submit" class="btn">🔐 Login as Admin</button>
+                <button type="submit" class="btn"><i class="fa-solid fa-sign-in-alt"></i> Login as Admin</button>
             </form>
 
             <p class="auth-link"><a href="/login">← Back to Farmer Login</a></p>

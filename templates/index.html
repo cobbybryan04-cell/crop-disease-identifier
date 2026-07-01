@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crop Disease Identifier</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/css/all.min.css">
 </head>
 <body>
 
     <nav>
-    <h1>🌿 Crop Disease Identifier</h1>
+    <h1><i class="fa-brands fa-pagelines"></i> Crop Disease Identifier</h1>
   <div>
     <a href="/">Home</a>
     <a href="/history">History</a>
-    <a href="/chatbot">🤖 Assistant</a>
-    <a href="/about">About</a>
+    <a href="/chatbot"><i class="fa-solid fa-robot"></i> Assistant</a>
+    <a href="/about"><i class="fa-solid fa-info-circle"></i> About</a>
     {% if session.get('admin') %}
-        <a href="/admin/dashboard">⚙️ Admin Panel</a>
-        <a href="/admin/logout">Logout</a>
+        <a href="/admin/dashboard"><i class="fa-solid fa-user-tie"></i> Admin Panel</a>
+        <a href="/admin/logout"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
     {% else %}
-        <a href="/profile">👤 {{ session['user_name'] }}</a>
-        <a href="/logout">Logout</a>
+        <a href="/profile"><i class="fa-solid fa-person-circle-plus"></i> {{ session['user_name'] }}</a>
+        <a href="/logout"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
     {% endif %}
 </div>
 </nav>
@@ -33,8 +34,8 @@
 
        <div class="upload-box">
     <div class="camera-tabs">
-        <button class="tab-btn active" onclick="showTab('upload')">📁 Upload Photo</button>
-        <button class="tab-btn" onclick="showTab('camera')">📷 Use Camera</button>
+        <button class="tab-btn active" onclick="showTab('upload')"><i class="fa fa-folder"></i> Upload Photo</button>
+        <button class="tab-btn" onclick="showTab('camera')"><i class="fa fa-camera"></i> Use Camera</button>
     </div>
 
     <form action="/upload" method="POST" enctype="multipart/form-data" id="uploadForm">
@@ -42,7 +43,7 @@
             <div class="upload-area" id="uploadArea">
                 <img src="" alt="" id="previewImage" style="display:none;">
                 <div id="uploadText">
-                    <span>📸</span>
+                    <span><i class="fa fa-camera"></i></span>
                     <p>Click to upload or drag & drop</p>
                     <p>Supports: JPG, PNG, GIF</p>
                 </div>
@@ -57,30 +58,30 @@
                 <img id="capturedImage" style="display:none; width:100%; border-radius:10px;">
             </div>
            <div class="camera-buttons">
-    <button type="button" class="btn" id="startCameraBtn" onclick="startCamera()">📷 Start Camera</button>
-    <button type="button" class="btn" id="captureBtn" onclick="capturePhoto()" style="display:none;">📸 Capture Photo</button>
-    <button type="button" class="btn btn-outline" id="retakeBtn" onclick="retakePhoto()" style="display:none;">🔄 Retake</button>
+    <button type="button" class="btn" id="startCameraBtn" onclick="startCamera()"><i class="fa-brands fa-camera"></i> Start Camera</button>
+    <button type="button" class="btn" id="captureBtn" onclick="capturePhoto()" style="display:none;"><i class="fa-solid fa-camera"></i> Capture Photo</button>
+    <button type="button" class="btn btn-outline" id="retakeBtn" onclick="retakePhoto()" style="display:none;"><i class="fa-solid fa-undo"></i> Retake</button>
 </div>
             <input type="file" id="cameraFile" name="file" style="display:none;">
         </div>
 
-        <button type="submit" class="btn" id="analyzeBtn">🔍 Analyze Crop</button>
+        <button type="submit" class="btn" id="analyzeBtn"><i class="fa-solid fa-search"></i> Analyze Crop</button>
     </form>
 </div>
 
         <div class="features">
             <div class="feature-card">
-                <span>🤖</span>
+                <span><i class="fa-solid fa-robot"></i></span>
                 <h3>AI Powered</h3>
                 <p>Uses advanced AI to identify diseases accurately</p>
             </div>
             <div class="feature-card">
-                <span>⚡</span>
+                <span><i class="fa-solid fa-bolt"></i></span>
                 <h3>Instant Results</h3>
                 <p>Get disease identification in seconds</p>
             </div>
             <div class="feature-card">
-                <span>💊</span>
+                <span><i class="fa-solid fa-pills"></i> </span>
                 <h3>Treatment Guide</h3>
                 <p>Receive specific treatment recommendations</p>
             </div>
@@ -90,7 +91,7 @@
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <div id="loadingSpinner" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:999; justify-content:center; align-items:center; flex-direction:column;">
     <div style="border:8px solid #f3f3f3; border-top:8px solid #2d7a2d; border-radius:50%; width:60px; height:60px; animation:spin 1s linear infinite;"></div>
-    <p style="color:white; margin-top:20px; font-size:18px;">🌿 Analyzing your crop...</p>
+    <p style="color:white; margin-top:20px; font-size:18px;"><i class="fa-solid fa-spinner"></i> Analyzing your crop...</p>
 </div>
 
 <style>

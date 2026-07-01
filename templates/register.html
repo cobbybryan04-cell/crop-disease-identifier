@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Crop Disease Identifier</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/css/all.min.css">
 </head>
 <body>
 
@@ -14,7 +15,7 @@
 
     <div class="container">
         <div class="auth-box">
-            <h2>👨‍🌾 Create Account</h2>
+            <h2><i class="fa-solid fa-user-plus"></i> Create Account</h2>
             <p>Join us to start identifying crop diseases</p>
 
             {% with messages = get_flashed_messages(with_categories=true) %}

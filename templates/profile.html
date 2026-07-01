@@ -5,28 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Crop Disease Identifier</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/css/all.min.css">
 </head>
 <body>
 
     <nav>
-        <h1>🌿 Crop Disease Identifier</h1>
+        <h1><i class="fa-brands fa-pagelines"></i> Crop Disease Identifier</h1>
     <div>
     <a href="/">Home</a>
     <a href="/history">History</a>
-    <a href="/chatbot">🤖 Assistant</a>
-    <a href="/about">About</a>
+    <a href="/chatbot"><i class="fa-solid fa-robot"></i> Assistant</a>
+    <a href="/about"><i class="fa-solid fa-info-circle"></i> About</a>
     {% if session.get('admin') %}
-        <a href="/admin/dashboard">⚙️ Admin Panel</a>
-        <a href="/admin/logout">Logout</a>
+        <a href="/admin/dashboard"><i class="fa-solid fa-user-tie"></i> Admin Panel</a>
+        <a href="/admin/logout"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
     {% else %}
-        <a href="/profile">👤 {{ session['user_name'] }}</a>
+        <a href="/profile"><i class="fa-solid fa-person-circle-plus"></i> {{ session['user_name'] }}</a>
         <a href="/logout">Logout</a>
     {% endif %}
 </div>
     </nav>
 
     <div class="container">
-        <h2 class="page-title">👤 My Profile</h2>
+        <h2 class="page-title"><i class="fa-solid fa-image-portrait"></i> My Profile</h2>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}

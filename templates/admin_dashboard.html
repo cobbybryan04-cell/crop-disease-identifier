@@ -11,41 +11,41 @@
 
     <nav>
         <a href="/admin/dashboard" style="text-decoration:none; color:white;">
-            <h1>🌿 Crop Disease Identifier</h1>
+            <h1><i class="fa-brands fa-pagelines"></i> Crop Disease Identifier</h1>
         </a>
         <div>
             <a href="/">Home</a>
-            <a href="/admin/dashboard">Dashboard</a>
-            <a href="/admin/users">Users</a>
-            <a href="/admin/scans">All Scans</a>
-            <a href="/admin/diseases">Diseases</a>
-            <a href="/about">About</a>
-            <a href="/admin/logout">Logout</a>
+            <a href="/admin/dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="/admin/users"><i class="fa-solid fa-users"></i> Users</a>
+            <a href="/admin/scans"><i class="fa-solid fa-history"></i> All Scans</a>
+            <a href="/admin/diseases"><i class="fa-solid fa-disease"></i> Diseases</a>
+            <a href="/about"><i class="fa-solid fa-info-circle"></i> About</a>
+            <a href="/admin/logout"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
         </div>
     </nav>
 
     <div class="container">
-        <h2 class="page-title">👨‍💻 Admin Dashboard</h2>
+        <h2 class="page-title"><i class="fa-solid fa-chart-line"></i> Admin Dashboard</h2>
 
         <!-- STATS CARDS -->
         <div class="stats-grid">
             <div class="stat-card">
-                <span>👨‍🌾</span>
+                <span><i class="fa-solid fa-users"></i></span>
                 <h3>{{ total_users }}</h3>
                 <p>Total Farmers</p>
             </div>
             <div class="stat-card">
-                <span>📸</span>
+                <span><i class="fa-solid fa-camera"></i></span>
                 <h3>{{ total_scans }}</h3>
                 <p>Total Scans</p>
             </div>
             <div class="stat-card">
-                <span>🦠</span>
+                <span><i class="fa-solid fa-disease"></i></span>
                 <h3>{{ total_diseases }}</h3>
                 <p>Diseases Found</p>
             </div>
             <div class="stat-card">
-                <span>✅</span>
+                <span><i class="fa-solid fa-check-circle"></i></span>
                 <h3>{{ healthy_crops }}</h3>
                 <p>Healthy Crops</p>
             </div>
@@ -54,18 +54,18 @@
         <!-- CHARTS -->
         <div class="charts-grid">
             <div class="chart-box">
-                <h3>🦠 Top Diseases</h3>
+                <h3><i class="fa-solid fa-skull"></i> Top Diseases</h3>
                 <canvas id="diseasesChart"></canvas>
             </div>
             <div class="chart-box">
-                <h3>⚠️ Severity Distribution</h3>
+                <h3><i class="fa-solid fa-exclamation-triangle"></i> Severity Distribution</h3>
                 <canvas id="severityChart"></canvas>
             </div>
         </div>
 
         <!-- TOP CROPS SCANNED -->
         <div class="report-section">
-            <h3>🌾 Most Scanned Crops</h3>
+            <h3><i class="fa-solid fa-leaf"></i> Most Scanned Crops</h3>
             <table class="history-table">
                 <thead>
                     <tr>
@@ -79,7 +79,7 @@
                     {% for crop in top_crops %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td>🌿 {{ crop[0] }}</td>
+                        <td><i class="fa-solid fa-leaf"></i> {{ crop[0] }}</td>
                         <td>{{ crop[1] }}</td>
                         <td><span class="badge-green">Active</span></td>
                     </tr>
@@ -90,7 +90,7 @@
 
         <!-- TOP SCANNERS -->
         <div class="report-section">
-            <h3>👨‍🌾 Top Farmers (Most Scans)</h3>
+            <h3><i class="fa-solid fa-user-friends"></i> Top Farmers (Most Scans)</h3>
             <table class="history-table">
                 <thead>
                     <tr>
@@ -104,8 +104,8 @@
                     {% for farmer in top_farmers %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td>👨‍🌾 {{ farmer[0] }}</td>
-                        <td>📍 {{ farmer[1] }}</td>
+                        <td><i class="fa-solid fa-user"></i> {{ farmer[0] }}</td>
+                        <td><i class="fa-solid fa-map-marker-alt"></i> {{ farmer[1] }}</td>
                         <td>{{ farmer[2] }}</td>
                     </tr>
                     {% endfor %}
@@ -115,7 +115,7 @@
 
         <!-- RECENT SCANS -->
         <div class="report-section">
-            <h3>📋 Recent Scans</h3>
+            <h3><i class="fa-solid fa-clipboard-list"></i> Recent Scans</h3>
             <table class="history-table">
                 <thead>
                     <tr>
@@ -133,9 +133,9 @@
                     <tr>
                         <td>{{ scan[0] }}</td>
                         <td><img src="/uploads/{{ scan[2] }}" style="width:50px; height:50px; object-fit:cover; border-radius:6px;"></td>
-                        <td>{{ scan[8] }}</td>
-                        <td>{{ scan[3] }}</td>
-                        <td>{{ scan[4] }}</td>
+                        <td><i class="fa-solid fa-user"></i> {{ scan[8] }}</td>
+                        <td><i class="fa-solid fa-leaf"></i> {{ scan[3] }}</td>
+                        <td><i class="fa-solid fa-skull"></i> {{ scan[4] }}</td>
                         <td class="severity-{{ scan[6] | lower }}">{{ scan[6] }}</td>
                         <td>{{ scan[7] }}</td>
                     </tr>

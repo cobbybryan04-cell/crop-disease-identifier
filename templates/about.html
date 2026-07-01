@@ -5,23 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Crop Disease Identifier</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/css/all.min.css">
 </head>
 <body>
 
     <nav>
         <a href="/" style="text-decoration:none; color:white;">
-            <h1>🌿 Crop Disease Identifier</h1>
+            <h1><i class="fa-brands fa-pagelines"></i> Crop Disease Identifier</h1>
         </a>
         <div>
             <a href="/">Home</a>
             <a href="/history">History</a>
-            <a href="/chatbot">🤖 Assistant</a>
+            <a href="/chatbot"><i class="fa-solid fa-robot"></i> Assistant</a>
             <a href="/about">About</a>
             {% if session.get('admin') %}
-                <a href="/admin/dashboard">⚙️ Admin Panel</a>
+                <a href="/admin/dashboard"><i class="fa-solid fa-user-tie"></i> Admin Panel</a>
                 <a href="/admin/logout">Logout</a>
             {% else %}
-                <a href="/profile">👤 {{ session['user_name'] }}</a>
+                <a href="/profile"><i class="fa-solid fa-person-circle-plus"></i> {{ session['user_name'] }}</a>
                 <a href="/logout">Logout</a>
             {% endif %}
         </div>
@@ -32,19 +33,19 @@
 
         <div class="about-box">
             <div class="about-card">
-                <span>🌿</span>
+                <span><i class="fa-brands fa-envira"></i></span>
                 <h3>What is Crop Disease Identifier?</h3>
                 <p>Crop Disease Identifier is an AI-powered web application designed to help farmers worldwide identify crop diseases instantly by uploading a photo of their crop. The system analyzes the image and provides disease information and treatment recommendations.</p>
             </div>
 
             <div class="about-card">
-                <span>🎯</span>
+                <span><i class="fa-solid fa-location-crosshairs"></i></span>
                 <h3>Our Mission</h3>
                 <p>To empower farmers worldwide with modern AI technology to detect crop diseases early, reduce crop losses, and improve agricultural productivity.</p>
             </div>
 
             <div class="about-card">
-                <span>⚙️</span>
+                <span><i class="fa-solid fa-gear"></i></span>
                 <h3>How It Works</h3>
                 <p>1. Farmer uploads a photo of a sick crop<br>
                    2. Our AI analyzes the image instantly<br>
@@ -54,13 +55,13 @@
             </div>
 
             <div class="about-card">
-                <span>🛠️</span>
+                <span><i class="fa-brands fa-pied-piper-alt"></i></span>
                 <h3>Technologies Used</h3>
                 <p>Python & Flask (Backend), Groq AI - Llama 4 (AI Analysis), SQLite (Database), HTML, CSS & JavaScript (Frontend)</p>
             </div>
 
             <div class="about-card">
-                <span>👨‍💻</span>
+                <span><i class="fa-solid fa-user"></i></span>
                 <h3>Developer</h3>
                 <p>Developed by <strong>Pierre Bryan IRADUTUNGA</strong><br>
                 Final Year BIT Student<br>
@@ -69,7 +70,7 @@
             </div>
 
             <div class="about-card">
-                <span>📞</span>
+                <span><i class="fa-solid fa-phone"></i></span>
                 <h3>Contact</h3>
                 <p>Email: cobbybryan04@gmail.com<br>
                 <p>Call: 0783902971<br>

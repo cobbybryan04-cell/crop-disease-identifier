@@ -5,34 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scan History</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/css/all.min.css">
 </head>
 <body>
 
     <nav>
         <a href="/" style="text-decoration:none; color:white;">
-            <h1>🌿 Crop Disease Identifier</h1>
+            <h1><i class="fa-brands fa-pagelines"></i> Crop Disease Identifier</h1>
         </a>
         <div>
             <a href="/">Home</a>
             <a href="/history">History</a>
-            <a href="/chatbot">🤖 Assistant</a>
+            <a href="/chatbot"><i class="fa-solid fa-robot"></i> Assistant</a>
             <a href="/about">About</a>
             {% if session.get('admin') %}
-                <a href="/admin/dashboard">⚙️ Admin Panel</a>
+                <a href="/admin/dashboard"><i class="fa-solid fa-user-tie"></i> Admin Panel</a>
                 <a href="/admin/logout">Logout</a>
             {% else %}
-                <a href="/profile">👤 {{ session['user_name'] }}</a>
+                <a href="/profile"><i class="fa-solid fa-user"></i> {{ session['user_name'] }}</a>
                 <a href="/logout">Logout</a>
             {% endif %}
         </div>
     </nav>
 
     <div class="containr p-4">
-        <h2 class="page-title">📋 Scan History</h2>
+        <h2 class="page-title"><i class="fa-solid fa-history"></i> Scan History</h2>
 
         {% if scans %}
         <div class="history-actions">
-            <a href="/delete-all" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete ALL scans?')">🗑️ Delete All</a>
+            <a href="/delete-all" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete ALL scans?')"><i class="fa-solid fa-trash"></i> Delete All</a>
         </div>
 
         <table class="history-table">
@@ -58,7 +59,7 @@
                     <td>{{ scan[5] }}</td>
                     <td class="severity-{{ scan[6] | lower }}">{{ scan[6] }}</td>
                     <td>{{ scan[7] }}</td>
-                    <td><a href="/delete/{{ scan[0] }}" class="btn-delete" onclick="return confirm('Delete this scan?')">🗑️ Delete</a></td>
+                    <td><a href="/delete/{{ scan[0] }}" class="btn-delete" onclick="return confirm('Delete this scan?')"><i class="fa-solid fa-trash"></i> Delete</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -66,10 +67,10 @@
 
         {% else %}
         <div class="empty-history">
-            <span>📭</span>
+            <span><i class="fa-solid fa-inbox"></i></span>
             <h3>No scans yet!</h3>
             <p>Upload a crop photo to get started</p>
-            <a href="/" class="btn">📸 Analyze a Crop</a>
+            <a href="/" class="btn"><i class="fa-solid fa-search"></i> Analyze a Crop</a>
         </div>
         {% endif %}
 
